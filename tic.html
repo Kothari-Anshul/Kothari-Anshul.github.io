@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Play Tic Tac Toe Game</title>
+		<style>
+		body{
+		background-color:#006699;
+		}
+		.outer{
+			width:350px;
+			height:350px;
+			margin:auto;
+			margin-top:150px;
+		}
+		.image{
+			width: 100px;
+			height: 100px;
+		}
+		.button{
+			width: 80px;
+			font-family: "Comic Sans MS";
+			font-weight: bold;
+			margin: auto;
+			background-color:white;
+			padding:20px;
+			display:none;
+		}
+		</style>
+		<script>
+		var matrix = [];
+		for(var x = 0; x <= 2; x++){
+			matrix[x] = [];    
+			for(var y = 0; y <= 2; y++){ 
+				matrix[x][y] = 2;    
+			}    
+		}
+		var count = 0;
+			
+			function zero_cross(row,col,ida){
+					count = count + 1;
+		
+					if(count > 9){
+						alert("Game Finished Try Again!!");
+						document.getElementById("bt").style.display = "block";
+						return;
+					}
+					if(count%2 == 0){
+						
+						if(matrix[row][col] == 2){
+							document.getElementById(ida).src = "cross.png";
+							matrix[row][col] = 1;
+						}
+						if(checkforpattern(1)){
+							alert("Kudos Player Two Won!!");
+							document.getElementById("bt").style.display = "block";
+							
+						}
+					}else{
+						
+						if(matrix[row][col] == 2){
+							document.getElementById(ida).src = "o.png";
+							matrix[row][col] = 0;
+						}
+						
+						if(checkforpattern(0)){
+							alert("Kudos Player One Won!");
+							document.getElementById("bt").style.display = "block";
+							
+						}
+					}
+					
+					//document.getElementById(ida).src = "cross.png";
+					//document.getElementById("banner").innerHTML = " gn" + count;
+					
+					//matrix[row][col] = 0;
+					//if(checkforpattern(0))
+						//document.getElementById("banner").innerHTML = "player 1 won";
+				
+			
+				//document.getElementById(id).src = "o.png";
+					//matrix[row][col] = 1;
+					
+					//if(checkforpattern(1))
+						//document.getElementById("banner").inerHTML = "player 2 won" + ida;
+				
+			}	
+			function checkforpattern(number){
+					return ((matrix[0][0] == number && matrix[0][1] == number && matrix[0][2] == number ) || (matrix[1][0] == number && matrix[1][1] == number && matrix[1][2] == number) || (matrix[2][0] == number && matrix[2][1] == number && matrix[2][2] == number)|| (matrix[0][0] == number && matrix[1][0] == number && matrix[2][0] == number) || (matrix[0][1] == number && matrix[1][1] == number && matrix[2][1] == number) || (matrix[0][2] == number && matrix[1][2] == number && matrix[2][2] == number) || (matrix[0][0] == number && matrix[1][1] == number && matrix[2][2] == number) || (matrix[2][0] == number && matrix[1][1] == number && matrix[0][2] == number))
+						
+			}
+			
+			
+			
+			
+		</script>
+	</head>
+	<body>
+		<div class="outer">
+			<div>
+				<img id = "ab1" src = "white_canvas.png" class = "image" onclick = "zero_cross(0,0,this.id)"/>
+				<img id = "ab2" src = "white_canvas.png" class = "image" onclick = "zero_cross(0,1,this.id)"/>
+				<img id = "ab3" src = "white_canvas.png" class = "image" onclick = "zero_cross(0,2,this.id)"/>
+			</div>
+			<div>
+				<img id = "ab4" src = "white_canvas.png" class = "image" onclick = "zero_cross(1,0,this.id)"/>
+				<img id = "ab5" src = "white_canvas.png" class = "image" onclick = "zero_cross(1,1,this.id)"/>
+				<img id = "ab6" src = "white_canvas.png" class = "image" onclick = "zero_cross(1,2,this.id)"/>
+			</div>
+			<div>
+				<img id = "ab7" src = "white_canvas.png" class = "image" onclick = "zero_cross(2,0,this.id)"/>
+				<img id = "ab8" src = "white_canvas.png" class = "image" onclick = "zero_cross(2,1,this.id)"/>
+				<img id = "ab9" src = "white_canvas.png" class = "image" onclick = "zero_cross(2,2,this.id)"/>
+			</div>
+				
+			
+		
+			
+		
+		</div>
+		<div class = "button"  id = "bt" onclick="location.reload()">Try Again</div>
+		
+	</body>
+</html>

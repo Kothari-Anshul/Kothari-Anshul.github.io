@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Paly Pong Game</title>
+	</head>
+	<style>
+		.outer{
+			width: 500px;
+			height: 500px;
+			margin: auto;
+			background-color: black;
+			position:relative;
+		
+		}
+		.bar{
+			width:100px;
+			height:500px;
+			position:relative;
+			
+		}
+		.paddle{
+			position:absolute;
+			top:0px;
+			left:45px;
+			width:10px;
+			height:60px;
+			background-color:white;
+		}
+		.ball{
+			position:absolute;
+			width:10px;
+			height:10px;
+			background-color:red;
+			top:250px;
+			left:250px;
+		}
+		#button{
+			width:200px;
+			padding:20px;
+			background-color:#000000;
+			color:#ffffff;
+			margin:auto;
+			display:block;
+		
+		}
+		.controls{
+			width:500px;
+			padding:20px;
+			text-sze:25px;
+			margin:auto;
+		}
+		
+	</style>
+	<script>
+		function myfunct(e){
+			var keynum = e.which;
+			var str = String.fromCharCode(keynum);
+	
+	
+			if( str.localeCompare('z') == 0 || str.localeCompare('Z') == 0){
+				var element = document.getElementById('pad_left');
+				var style = window.getComputedStyle(element);
+				var top = style.getPropertyValue('top');
+				
+				var new_top = parseInt(top) + 5;
+				if(new_top <= 450)
+				element.style.top = new_top + "px";
+			}
+			else if( str.localeCompare('x') == 0 || str.localeCompare('X') == 0){
+				var element = document.getElementById('pad_left');
+				var style = window.getComputedStyle(element);
+				var top = style.getPropertyValue('top');
+				
+				var new_top = parseInt(top) - 5;
+				if(new_top >=0)
+				element.style.top = new_top + "px";
+			}
+			else if( str.localeCompare('n') == 0 || str.localeCompare('N') == 0){
+				var element = document.getElementById('pad_right');
+				var style = window.getComputedStyle(element);
+				var top = style.getPropertyValue('top');
+				
+				var new_top = parseInt(top) + 5;
+				if(new_top <= 450)
+				element.style.top = new_top + "px";
+			}
+			else if( str.localeCompare('m') == 0 || str.localeCompare('M') == 0){
+				var element = document.getElementById('pad_right');
+				var style = window.getComputedStyle(element);
+				var top = style.getPropertyValue('top');
+				
+				var new_top = parseInt(top) - 5;
+				if(new_top >= 0)
+				element.style.top = new_top + "px";
+			}
+			
+			
+			
+		}
+		function bounce(){
+			var flag = 1;
+			var slope = 2;
+			var element = document.getElementById('bounce_ball');
+			var style = window.getComputedStyle(element);
+			
+			var y = parseInt(style.getPropertyValue('top'));
+			
+			var x = parseInt(style.getPropertyValue('left'));
+			var player1 = 0;
+			var player2 = 0;
+			var id = setInterval(frame,50);
+				function frame(){
+				var paddle_element = document.getElementById('pad_left');
+				var paddle_style =  window.getComputedStyle(paddle_element);
+				var paddle_top = parseInt(paddle_style.getPropertyValue('top'));
+				var paddle_element_right = document.getElementById('pad_right');
+				var paddle_style_right =  window.getComputedStyle(paddle_element_right);
+				var paddle_top_right = parseInt(paddle_style_right.getPropertyValue('top'));
+				
+				
+				if(x >= 0 && x <= 55 && y>= paddle_top && y <= (paddle_top + 20)){
+					slope = -1;
+					y =  slope*(5) + y;
+					x = x + 5;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 1;
+				}
+				else if(x >= 0 && x <= 55 && y>= (paddle_top + 20) && y <= (paddle_top + 40)){
+					slope = 0;
+					y =  slope*(5)+ y;
+					x = x + 5;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 1;
+				}else if(x >= 0 && x <= 55 && y>= (paddle_top + 40) && y <= (paddle_top + 60)){
+					slope = 1;
+					y =  slope*(5)+ y;
+					x = x + 5;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 1;
+				}
+				else if(x >=0 && x <= 55 && y>=0 && y<=490 ){
+					x = 250;
+					y = 250;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					player2++;
+				}else if(x >= 445 && x <= 500 && y>= paddle_top_right && y <= (paddle_top_right + 20)){
+				
+					slope = -1;
+					y =  slope*(5) + y;
+					x = x - 5;
+					
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 0;
+				}
+				else if(x >= 445 && x <= 500 && y>= (paddle_top_right + 20) && y <= (paddle_top_right + 40)){
+					slope = 0;
+					y = slope + y;
+					x = x - 5;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 0;
+				}else if(x >= 445 && x <= 500 && y>= (paddle_top_right + 40) && y <= (paddle_top_right + 60)){
+					slope = 1;
+					y =  slope*(5)+ y;
+					x = x - 5;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					flag = 0;
+				}
+				else if(x >=445 && x <= 500 && y>=0 && y<=490 ){
+					x = 250;
+					y = 250;
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					player1++;
+					
+				}else if(x >=0 && x <= 500 && y <=0){
+					slope = -slope;
+					y =  slope*(5)+ y;
+					if(flag == 1){
+						x = x + 5;
+					}else{
+						x = x - 5;
+					}
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					
+				}else if(x >=0 && x <= 500 && y >=500){
+					slope = -slope;
+					y =  slope*(5)+ y;
+					if(flag == 1){
+						x = x + 5;
+					}
+					else{
+						x = x - 5;
+					}
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+					
+				}else if(x >=0 && x <= 490){
+					
+					y =  slope*(5)+ y;
+					if(flag == 1){
+						x = x + 5;
+					}else{
+						x = x - 5;
+					}
+					element.style.top = y + "px";
+					element.style.left = x + "px";
+				
+				}
+				if(player1 == 10){
+					clearInterval(id);
+					document.getElementById('button').style.display = 'block';
+					alert("Kudos! Player 1 Won");
+				}
+				if(player2 == 10){
+					clearInterval(id);
+					document.getElementById('button').style.display = 'block';
+					alert("Kudos! Player 2 Won");
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			}
+		}
+		
+	</script>
+	<body onkeypress = "myfunct(event)">
+		<div class = "outer" > 
+			<div class = "bar"  style="float:left;">
+				<div class = "paddle" id = "pad_left" >
+				</div>
+			</div>
+			<div class = "bar" style = "float:right;">
+				<div class = "paddle" id = "pad_right" >
+				</div>
+			</div>
+			<div class = "ball" id = "bounce_ball">
+			</div>
+		</div>
+		<button id = "button" onclick = "bounce()">Play</button>
+		
+		<div class = "controls">
+			<h1>Game Controls</h1>
+			<h3>Player 1<h3>
+			<p> z : Down</p>
+			<p> x : Up</p>
+			<h3>Player 2<h3>
+			<p> n : Down</p>
+			<p> m : Up</p>
+		</div>
+		
+	</body>
+</html>
