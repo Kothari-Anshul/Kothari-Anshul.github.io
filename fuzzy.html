@@ -1,0 +1,140 @@
+<!-- Fuzzy Decision Making ,Application in Retail Stores -->
+<!DOCTYPE html>
+<html>
+	<head>	
+		<title>Maruti Car Store
+		</title>
+		<style>
+			div.container{
+				width:1000px;
+				margin:auto;
+				
+			}
+			div.innerDiv{
+				width: 500px;
+				float:left;
+			}
+			.center{
+				text-align:center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class = "container">
+			<h1 class = "center">Welcome To Maruti Car Store!</h1>
+			<h3 class = "center">Please help us to serve you better by selecting preferences below:</h3>
+			<div class = "innerDiv">
+				Cost: <input type = "range" id = "cost" min = "0" max = "100" onchange = "printf1(this.value)" value = "0"/>
+				<p id ="printf_range1"></p>
+				Mileage: <input type = "range" id = "mileage" min = "0" max = "100" onchange = "printf2(this.value)" value = "0"/>
+				<p id ="printf_range2"></p>
+				Comfort: <input type = "range" id = "comfort" min = "0" max = "100" onchange = "printf3(this.value)" value = "0"/>
+				<p id ="printf_range3"></p>
+				Maintenance: <input type = "range" id = "maintenance" min = "0" max = "100" onchange = "printf4(this.value)" value = "0"/>
+				<p id ="printf_range4"></p>
+				Market Review: <input type = "range" id = "market_review" min = "0" max = "100" onchange = "printf5(this.value)" value = "0"/>
+				<p id ="printf_range5"></p>
+				<br/>
+				<br/>
+				<br/>
+				<span style=  "margin:100px; padding:15px 10px 15px 10px; background-color:#006699; color:#ffffff" onclick = "best_option()">Next</span>
+			</div>
+			<img style = "width:500px; height:500px;display:none;" id = "result"/>
+		</div>
+		
+	</body>
+	<script type = "text/javascript">
+		function printf1(newvalue){
+			var value = document.getElementById("cost").value;
+			document.getElementById("printf_range1").innerHTML = value;
+		}
+		function printf2(newvalue){
+			var value = document.getElementById("mileage").value;
+			document.getElementById("printf_range2").innerHTML = value;
+		}function printf3(newvalue){
+			var value = document.getElementById("comfort").value;
+			document.getElementById("printf_range3").innerHTML = value;
+		}
+		function printf4(newvalue){
+			var value = document.getElementById("maintenance").value;
+			document.getElementById("printf_range4").innerHTML = value;
+		}
+		function printf5(newvalue){
+			var value = document.getElementById("market_review").value;
+			document.getElementById("printf_range5").innerHTML = value;
+		}
+		
+		
+		function decision_parameter(preferences_bar,objective){
+				var i ;
+				var temp = [];									<!-- Applying the equation min(for all i = 0 to lenght-1 max(preferences_bar,objective) -->
+				for(i = 0; i < preferences_bar.length; i++){
+					if(objective[i] > preferences_bar[i]){
+						temp[i] = objective[i];
+					}else{
+						temp[i] = preferences_bar[i];
+					}
+				}
+				
+				var min = temp[0];
+				for(i = 1;i< temp.length;i++){
+					if(temp[i] < min){
+						min = temp[i];
+					}
+				}
+				return min;
+		}
+		function best_option(){
+			var swift =  [1.0,0.5,0.9,0.8,0.6];		<!-- Membership values for different objectivers such as [cost,mileage,comfort,maintenance,market_review]-->
+			var ritz =   [0.9,1.0,0.7,0.4,0.7];
+			var ertica = [0.6,0.7,1.0,0.9,0.8];
+			var baleno = [0.7,0.8,0.2,1.0,0.9];
+			var vitara = [0.2,0.9,0.3,0.3,1.0];
+			var preferences = [];
+			preferences[0] = 1 - (document.getElementById("cost").value)/100;		<!-- Calculating Bar/Invert of the Preferences choosen by the Customer -->
+			preferences[1] = 1 - (document.getElementById("mileage").value)/100;
+			preferences[2] = 1 - (document.getElementById("comfort").value)/100;
+			preferences[3] = 1 - (document.getElementById("maintenance").value)/100;
+			preferences[4] = 1 - (document.getElementById("market_review").value)/100;
+			var decision_param = []
+			decision_param[0] = decision_parameter(preferences,swift);				<!-- Calculating Decision Parameter for each of the alternatives -->
+			decision_param[1] = decision_parameter(preferences,ritz);			
+			decision_param[2] = decision_parameter(preferences,ertica);
+			decision_param[3] = decision_parameter(preferences,baleno);
+			decision_param[4] = decision_parameter(preferences,vitara);
+			document.getElementById("result").innerHTML = decision_param;
+			var max = decision_param[0];											<!-- Choosing the Alternative with highest decision parameter value -->
+			var max_i = 0;
+			var i;
+			for(i = 1 ; i < decision_param.length; i++){
+				if(decision_param[i] > max){
+					max = decision_param[i];
+					max_i = i;
+				}
+			}
+			switch(max_i){															<!-- Displaying the Corresponding Image -->
+				case 0: document.getElementById("result").setAttribute("src","swift.jpg") ;
+						document.getElementById("result").style.display = "block";
+						break;
+				case 1: document.getElementById("result").setAttribute("src","ritz.jpg") ;
+						document.getElementById("result").style.display = "block";
+						break;
+				case 2: document.getElementById("result").setAttribute("src","ertica.jpg") ;
+						document.getElementById("result").style.display = "block";
+						break;
+				case 3: document.getElementById("result").setAttribute("src","baleno.jpg") ;
+						document.getElementById("result").style.display = "block";
+						break;
+				case 4: document.getElementById("result").setAttribute("src","vitara.jpg") ;
+						document.getElementById("result").style.display = "block";
+						break;
+			
+				
+			}
+			
+			
+
+		}
+	</script>
+	
+</html>
